@@ -21,8 +21,9 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-      const reponse = await axios.post("/api/users/login", user);
-      console.log(reponse);
+      const response = await axios.post("/api/users/login", user);
+      console.log(response);
+      
       toast.success("Login Success");
       router.push("/profile");
     } catch (error: any) {
@@ -38,9 +39,10 @@ export default function LoginPage() {
       setButtonDisabled(false);
     else setButtonDisabled(true);
   }, [user]);
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1>{loading?"Processing":"Login"}</h1>
+      <h1>{loading ? "Processing" : "Login"}</h1>
       <hr />
 
       <label htmlFor="email">Email</label>
@@ -68,7 +70,7 @@ export default function LoginPage() {
         className="p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-gray-600"
         onClick={onLogin}
       >
-        {buttonDisabled?"No Login":"Login"}
+        {buttonDisabled ? "No Login" : "Login"}
       </button>
       <Link href="/signup">Go to Signup</Link>
     </div>
