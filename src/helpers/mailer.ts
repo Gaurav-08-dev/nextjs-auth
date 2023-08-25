@@ -7,7 +7,6 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     const hashedToken = await bcryptjs.hash(userId.toString(), 10);
 
     // create a transporter
-
     if (emailType === "VERIFY") {
       await User.findByIdAndUpdate(
         userId,
@@ -19,11 +18,12 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         // { new: true, runValidators: true }
       );
     } else if (emailType === "RESET") {
+      console.log("RESET")
       await User.findByIdAndUpdate(
         userId,
         {
-          forgotPasswordToken: hashedToken,
-          forgotPasswordExpiry: Date.now() + 360000,
+          forgotPassowordToken: hashedToken,
+          forgotPasswordTokenExpiry: Date.now() + 360000,
         }
 
         // { new: true, runValidators: true }
@@ -50,7 +50,9 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         to ${
           emailType === "VERIFY" ? "verify your email" : "reset your password"
         } or copy and paste the link below in your browser.
-        <br>${process.env.DOMAIN}/verifyemail?token=${hashedToken} </p>`,
+        <br>${process.env.DOMAIN}/${
+        emailType === "VERIFY" ? "verifyemail" : "resetpassword"
+      }?token=${hashedToken} </p>`,
     };
 
     const mailResponse = await transport.sendMail(mailOptions);
