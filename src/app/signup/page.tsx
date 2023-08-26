@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -22,10 +22,9 @@ export default function SignupPage() {
 
     try {
       setLoading(true);
-
-      const response = await axios.post("/api/users/signup", user);
-      console.log("Signup Success", response.data);
-      router.push("/login");
+      await axios.post("/api/users/signup", user);
+      toast.success("Signup Success");
+      setTimeout(() => router.push("/login"),1000);
     } catch (error: any) {
       console.log("Signup Failed", error.message);
       toast.error(error.message);
@@ -46,6 +45,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      
       <h1>{!loading ? "Signup" : "Processing"}</h1>
       <hr />
       <label htmlFor="username">Username</label>
@@ -89,6 +89,7 @@ export default function SignupPage() {
         {buttonDisabled ? "No Signup" : "Signup"}
       </button>
       <Link href="/login">Go to Login</Link>
+      <Toaster />
     </div>
   );
 }

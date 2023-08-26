@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import brcryptjs from "bcryptjs";
 import axios from "axios";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const ResetPasswordPage = () => {
@@ -32,8 +32,8 @@ const ResetPasswordPage = () => {
           token,
         });
 
-        router.push("/login");
-        console.log(response);
+        toast.success("Password has been reset");
+        setTimeout(()=> router.push("/login"), 1000);
       }
     } catch (error: any) {
       console.log("Password Reset Failed!", error.message);
@@ -74,6 +74,7 @@ const ResetPasswordPage = () => {
       >
         Reset Password
       </button>
+      <Toaster/>
     </div>
   );
 };

@@ -1,16 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
 
-  const onResetPassword = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onResetPassword = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.stopPropagation();
     try {
       await axios.post("/api/users/forgotpassword", { email });
+      toast.success("Password Reset Email Sent");
     } catch (error: any) {
       console.log("Reset Password Failed", error.message);
       toast.error(error.message);
@@ -35,6 +38,7 @@ const ForgotPasswordPage = () => {
       >
         Reset Password
       </button>
+      <Toaster />
     </div>
   );
 };

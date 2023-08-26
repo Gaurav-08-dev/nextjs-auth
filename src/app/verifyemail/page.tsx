@@ -3,6 +3,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 
 const VerifyEmailPage = () => {
   const [token, setToken] = useState("");
@@ -11,7 +12,8 @@ const VerifyEmailPage = () => {
 
   const verifyUserEmail = async () => {
     try {
-      await axios.post("/api/users/verifyemail", { token });
+       await axios.post("/api/users/verifyemail", { token });
+      toast.success("User has been verified")
       setVerified(true);
     } catch (error: any) {
       setError(true);
@@ -50,6 +52,7 @@ const VerifyEmailPage = () => {
           <h2 className="text-2xl bg-red-500 text-black">Error</h2>
         </div>
       )}
+      <Toaster/>
     </div>
   );
 };
