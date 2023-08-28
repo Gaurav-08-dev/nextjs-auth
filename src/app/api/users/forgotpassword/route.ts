@@ -14,9 +14,8 @@ export async function POST(request: NextRequest) {
       email,
     });
 
-
     if (!user) {
-      NextResponse.json({ error: "Email does not exists" }, { status: 400 });
+     return  NextResponse.json({ error: "Email does not exists" }, { status: 400 });
     }
 
     await sendEmail({email,emailType:"RESET", userId:user._id})
@@ -25,7 +24,6 @@ export async function POST(request: NextRequest) {
       succcess: true,
     });
   } catch (error: any) {
-    console.log("HERE");
     return NextResponse.json({ error: error.message });
   }
 }
