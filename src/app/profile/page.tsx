@@ -12,7 +12,7 @@ export default function ProfilePage() {
   const handleLogout = async () => {
     try {
       const response = await axios.get("/api/users/logout");
-      toast.success("Logout Successful");
+      // toast.success("Logout Successful");
       router.push("/login");
     } catch (error: any) {
       console.log(error.message);
